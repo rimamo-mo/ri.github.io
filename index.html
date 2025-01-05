@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>don't look</title>
+    <link rel="stylesheet" href="first.css">
+
+     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&display=swap">
+     <style>
+         body {
+            box-sizing: border-box;
+             font-family: 'Nunito', sans-serif;
+         }
+     </style>
+</head> 
+<body>
+    <div class="box">
+        <div class="eye" id="left-eye"></div>
+        <div class="eye" id="right-eye"></div>
+        <div class="rectangle" id="rectangle1"></div>
+        <div class="rectangle" id="rectangle2"></div>
+        <div class="rectangle" id="rectangle3"></div>
+        <div class="rectangle" id="rectangle5"></div>
+        <div class="rectangle" id="rectangle6"></div>
+        <div class="rectangle" id="rectangle7"></div>
+        <div class="rectangle" id="rectangle8"></div>
+        <div class="rectangle" id="rectangle9"></div>
+        <div class="rectangle" id="rectangle10"></div>
+
+
+
+        <div class="center-text">12346023 KIM YENA</div>
+        <div id="custom-cursor"></div>
+        <div class="light"></div>
+    </div>
+    
+    <script>
+        document.addEventListener('mousemove', (e) => {
+      const customCursor = document.getElementById('custom-cursor');
+      customCursor.style.left = e.clientX + 'px';
+      customCursor.style.top = e.clientY + 'px';
+    });
+    
+        document.addEventListener('DOMContentLoaded', function () {
+            const rectangles = document.querySelectorAll('.rectangle');
+
+            rectangles.forEach(function (rectangle, index) {
+                const maxX = window.innerWidth - rectangle.clientWidth;
+                const maxY = window.innerHeight - rectangle.clientHeight;
+
+                let x = Math.random() * maxX;
+                let y = Math.random() * maxY;
+                let angle = Math.random() * 360;
+                let speed = 1.6;
+                let isMoving = true;
+
+                rectangle.style.left = x + 'px';
+                rectangle.style.top = y + 'px';
+
+                const moveRectangle = () => {
+                    if (isMoving) {
+                        const radians = angle * (Math.PI / 180);
+                        x = (x + speed * Math.cos(radians));
+                        y = (y + speed * Math.sin(radians));
+
+                        if (x < 0 || x > maxX) {
+                            angle = 180 - angle;
+                        }
+
+                        if (y < 0 || y > maxY) {
+                            angle = -angle;
+                        }
+
+                        rectangle.style.left = x + 'px';
+                        rectangle.style.top = y + 'px';
+
+                        angle += Math.random() * 10 - 5;
+                        requestAnimationFrame(moveRectangle);
+                    }
+                };
+
+                moveRectangle();
+
+                rectangle.addEventListener('click', function () {
+                    const pageURLs = [
+                        '02_puzzle.html',
+                        '03_germany.html',
+                        '05_father.html',
+                        '06_3d.html',
+                        '07_wall.html',
+                        '08_star.html',
+                        '09_pig.html',
+                        '10_horror.html',
+                        '11_eye.html'
+                    ];
+
+                    const imageURLs = [
+                        'https://i.ibb.co/s5YdJDj/12.png',
+                        'https://i.ibb.co/VMb5JGy/10.png',
+                        'https://via.placeholder.com/202',
+                        'https://i.ibb.co/NnrHyRf/3.png',
+                        'https://via.placeholder.com/205',
+                        'https://i.ibb.co/5RJVwNH/8.png',
+                        'https://i.ibb.co/cc30vM7/5.png',
+                        'https://via.placeholder.com/208',
+                        'https://via.placeholder.com/209',
+                        'https://via.placeholder.com/210',
+                        'https://via.placeholder.com/211',
+                    ];
+
+                    rectangle.style.backgroundImage = `url("${imageURLs[index]}")`;
+
+                    isMoving = false; // Stop the movement after clicking
+
+                    setTimeout(() => {
+                        window.location.href = pageURLs[index];
+                    }, 1000);
+                });
+            });
+        });
+
+        document.querySelector('body').addEventListener('mousemove', function(event) {
+            const eye = document.querySelectorAll('.eye');
+            eye.forEach(function (eye) {
+                let x = (eye.getBoundingClientRect().left) + (eye.clientWidth / 2);
+                let y = (eye.getBoundingClientRect().top) + (eye.clientHeight / 2);
+
+                let radian = Math.atan2(event.pageX - x, event.pageY - y);
+                let rotation = (radian * (180 / Math.PI) * -1) + 270;
+                eye.style.transform = "rotate(" + rotation + "deg)"
+            });
+        });
+    </script>
+    <script type="text/javascript">
+        var pos = document.documentElement;
+        pos.addEventListener('mousemove', e=>{
+            pos.style.setProperty('--x', e.clientX + 'px')
+            pos.style.setProperty('--y', e.clientY + 'px')
+        })
+    </script>
+</body>
+</html>
